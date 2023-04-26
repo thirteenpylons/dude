@@ -400,7 +400,7 @@ class ScraperBase(ABC):
                 yield rule._replace(group=Selector(selector=":root"))
 
     def initialize_scraper(self, urls: Sequence[str]) -> None:
-        self.rules = [rule for rule in self._update_rule_groups()]
+        self.rules = list(self._update_rule_groups())
         self.urls = collections.deque(urls)
         self.allowed_domains = {urlparse(url).netloc for url in urls}
         self.event_startup()
@@ -418,10 +418,7 @@ class ScraperBase(ABC):
         self.run_event("shutdown")
 
     def run_event(self, event_name: str) -> None:
-        loop = None
-        if self.has_async:
-            loop = asyncio.get_event_loop()
-
+        loop = asyncio.get_event_loop() if self.has_async else None
         for func in self.events[event_name]:
             if asyncio.iscoroutinefunction(func):
                 assert loop is not None
