@@ -8,16 +8,13 @@ def result_handler(element):
     """
     data = {}
 
-    url = element.query_selector("a.url")
-    if url:
+    if url := element.query_selector("a.url"):
         data["url"] = url.get_attribute("href")
 
-    title = element.query_selector(".title")
-    if title:
+    if title := element.query_selector(".title"):
         data["title"] = title.text_content()
 
-    description = element.query_selector(".description")
-    if description:
+    if description := element.query_selector(".description"):
         data["description"] = description.text_content()
 
     return data

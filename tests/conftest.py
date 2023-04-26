@@ -31,7 +31,10 @@ class IsUrl:
         When loading an HTML file from local, Selenium prepends "file://" to href.
         On Windows, "file:///<Drive>:" is prepended, e.g. "file:///D:".
         """
-        return isinstance(other, str) and (other == self.url or other == urljoin(self.full_html_path, self.url))
+        return isinstance(other, str) and other in [
+            self.url,
+            urljoin(self.full_html_path, self.url),
+        ]
 
     def __repr__(self) -> str:
         return f"IsUrl: {self.url}"

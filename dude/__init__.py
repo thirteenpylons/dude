@@ -227,7 +227,7 @@ def cli() -> None:  # pragma: no cover
                 "username": arguments.proxy_user or "",
                 "password": arguments.proxy_pass or "",
             }
-        elif parser_type in ("bs4", "parsel", "lxml"):
+        elif parser_type in {"bs4", "parsel", "lxml"}:
             user_info = ""
             if arguments.proxy_user and arguments.proxy_pass:
                 user_info = f"{arguments.proxy_user}:{arguments.proxy_pass}@"
